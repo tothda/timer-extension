@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "time",
+    "description": "The name of the application"
+  },
+  "appDescription": {
+    "message": "Timer Tracker",
+    "description": "The description of the application"
+  }
+}
