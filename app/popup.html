@@ -7,15 +7,28 @@
   <body>
     <!-- CHROME EXTENSION POPUP -->
     <script type="text/x-handlebars" data-template-name="application">
-      Hello from Ember!
+      {{outlet}}
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="tasks">
+      <h2>Tasks</h2>
+      {{input value=newTaskTitle}}
+      <button {{action addTask}}>Add</button>
+
+      <ul>
+      {{#each controller}}
+        <li>{{title}}</li>
+      {{/each}}
+      </ul>
     </script>
 
     <script src="components/jquery/jquery.js"></script>
     <script src="components/handlebars/handlebars.js"></script>
     <script src="components/ember/ember.js"></script>
+    <script src="components/ember-data/index.js"></script>
 
     <!-- build:js scripts/popup.js -->
-    <script src="scripts/popup.js"></script>
+    <script src="compiled_js/popup.js"></script>
     <!-- endbuild -->
   </body>
 </html>

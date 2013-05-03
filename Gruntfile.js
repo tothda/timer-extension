@@ -85,13 +85,14 @@ module.exports = function (grunt) {
                 }
             }
         },
+        // https://github.com/gruntjs/grunt-contrib-coffee
         coffee: {
             dist: {
                 files: [{
                     expand: true,
                     cwd: '<%= yeoman.app %>/scripts',
                     src: '{,*/}*.coffee',
-                    dest: '.tmp/scripts',
+                    dest: '<%= yeoman.app %>/compiled_js',
                     ext: '.js'
                 }]
             },

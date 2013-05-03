@@ -4,7 +4,8 @@
   "dependencies": {
     "jquery": "~1.9.1",
     "handlebars": "~1.0.0-rc.3",
-    "ember": "~1.0.0-rc.2"
+    "ember": "~1.0.0-rc.2",
+    "ember-data": "http://builds.emberjs.com.s3.amazonaws.com/ember-data-latest.js"
   },
   "devDependencies": {}
 }
