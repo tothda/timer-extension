@@ -35,17 +35,19 @@ App.ApplicationController = Ember.Controller.extend
   isRunning: Ember.computed.bool('running')
 
 App.TasksController = Ember.ArrayController.extend
+  tasks: (-> App.Task.all()).property()
+
   addTask: ->
     @get('store').createRecord(App.Task, {title: @get('newTaskTitle')})
     @get('store').commit()
 
   openTasks: (->
-    @get('model').filter (x) -> !x.get('isCompleted')
-  ).property('model.@each.isCompleted')
+    @get('tasks').filter (x) -> !x.get('isCompleted')
+  ).property('tasks.@each.isCompleted')
 
   completedTasks: (->
-    @get('model').filter (x) -> x.get('isCompleted')
-  ).property('model.@each.isCompleted')
+    @get('tasks').filter (x) -> x.get('isCompleted')
+  ).property('tasks.@each.isCompleted')
 
 App.TaskController = Ember.ObjectController.extend
   taskDidChange: (->
@@ -75,18 +77,15 @@ App.EditTaskView = Ember.TextField.extend
     this.$().focus()
 
 App.TodayController = Ember.ArrayController.extend
-  needs: ['application', 'tasks']
-  selectedTask: null
-  openTasks: Ember.computed.alias('controllers.tasks.openTasks')
-  isRunning: Ember.computed.alias('controllers.application.isRunning')
   logs: (-> App.Log.find()).property()
   completedLogs: (->
     @get('logs').filterProperty('isCompleted')
   ).property('logs.@each.isCompleted')
-  start: -> @send('startTimer', @get('selectedTask'))
 
 App.TimerController = Ember.ObjectController.extend
-  needs: ['application']
+  needs: ['application', 'tasks']
+  selectedTask: null
+  openTasks: Ember.computed.alias('controllers.tasks.openTasks')
   isRunning: Ember.computed.alias('controllers.application.isRunning')
   log: Ember.computed.alias('controllers.application.running.runningLog')
 
@@ -95,6 +94,8 @@ App.TimerController = Ember.ObjectController.extend
   ).property('log.startedAt')
 
   stop: -> @send('stopTimer', @get('log.task'))
+
+  start: -> @send('startTimer', @get('selectedTask'))
 
 App.LOG_TRANSITIONS = true
 
@@ -122,9 +123,7 @@ App.ApplicationRoute = Ember.Route.extend
 
 App.IndexRoute = Ember.Route.extend
   redirect: ->
-    isRunning = @controllerFor('application').get('isRunning')
-    console.log 'IndexRoute#redirect', isRunning
-    @transitionTo 'tasks'
+    @transitionTo 'timer'
 
 App.TasksRoute = Ember.Route.extend
   model: ->

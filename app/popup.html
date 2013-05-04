@@ -51,15 +51,7 @@
 
     <script type="text/x-handlebars" data-template-name="today">
       <h2>Today</h2>
-      {{#unless isRunning}}
-      {{view Ember.Select contentBinding=openTasks
-                          selectionBinding=selectedTask
-                          optionValuePath=content.id
-                          optionLabelPath=content.title
-                          prompt="Please select a task"}}
 
-      <button {{action start}} class="btn">Start</button>
-      {{/unless}}
       <br>
       <table class="table">
         <tr>
@@ -96,7 +88,13 @@
         <button class="btn" {{action stop}}>Stop</button>
         <button class="btn" {{action stop}}>Stop and close task</button>
       {{else}}
-        <strong>No timer is Running</strog>
+        {{view Ember.Select contentBinding=openTasks
+                            selectionBinding=selectedTask
+                            optionValuePath=content.id
+                            optionLabelPath=content.title
+                            prompt="Please select a task"}}
+
+        <button {{action start}} class="btn">Start</button>
       {{/if}}
     </script>
 
