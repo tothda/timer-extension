@@ -7,6 +7,9 @@
   <body>
     <!-- CHROME EXTENSION POPUP -->
     <script type="text/x-handlebars" data-template-name="application">
+      {{#linkTo today}}Today{{/linkTo}}
+      {{#linkTo tasks}}Tasks{{/linkTo}}
+      {{#linkTo timer}}Timer{{/linkTo}}
       {{outlet}}
     </script>
 
@@ -23,11 +26,38 @@
             {{else}}
               {{input type=checkbox checked=task.isCompleted}} 
               <label {{action "editTask" on="doubleClick"}}>{{task.title}}</label>
+              {{#linkTo task task}}details{{/linkTo}}
               <button {{action "removeTask"}} class="destroy">Delete</button>
             {{/if}}
           </li>
         {{/each}}
       </ul>
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="today">
+      <h2>Today</h2>
+      {{view Ember.Select contentBinding=allTasks
+                          selectionBinding=selectedTask
+                          optionValuePath=content.id
+                          optionLabelPath=content.title
+                          prompt="Please select a task"}}
+
+      <button {{action start}}>Start</button>
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="task">
+      <h2>{{title}}</h2>
+      <label>ID:</label> {{id}}
+      <ul>
+      {{#each logs}}
+        {{id}} - {{startedAt}} - {{finishedAt}}
+      {{/each}}
+      </ul>
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="timer">
+      <h2>{{title}} Running...</h2>
+      <label>Elapsed seconds: {{elapsedSeconds}}</label>
     </script>
 
     <script src="components/jquery/jquery.js"></script>
