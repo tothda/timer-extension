@@ -1,34 +1,49 @@
 <!doctype html>
 <html>
   <head>
+    <link href="components/bootstrap/docs/assets/css/bootstrap.css" rel="stylesheet">
     <link href="compiled_css/main.css" rel="stylesheet">
-
   </head>
   <body>
     <!-- CHROME EXTENSION POPUP -->
     <script type="text/x-handlebars" data-template-name="application">
-      {{#linkTo today}}Today{{/linkTo}}
-      {{#linkTo tasks}}Tasks{{/linkTo}}
+      {{#linkTo today}}Today{{/linkTo}} |
+      {{#linkTo tasks}}Tasks{{/linkTo}} |
       {{#linkTo timer}}Timer{{/linkTo}}
+      <div>
       {{outlet}}
+      </div>
     </script>
 
     <script type="text/x-handlebars" data-template-name="tasks">
-      <h2>Tasks</h2>
+      <h4>Tasks</h4>
       {{input value=newTaskTitle}}
-      <button {{action addTask}}>Add</button>
+      <button {{action addTask}} class="btn">Add</button>
 
       <ul class="task-list">
-        {{#each task in controller itemController="task"}}
-          <li {{bindAttr class="isCompleted:completed isEditing:editing"}}>
+        {{#each task in controller.openTasks itemController="task"}}
+          <li {{bindAttr class="isEditing:editing"}}>
             {{#if task.isEditing}}
               {{view App.EditTaskView taskBinding=task}}
             {{else}}
-              {{input type=checkbox checked=task.isCompleted}} 
-              <label {{action "editTask" on="doubleClick"}}>{{task.title}}</label>
-              {{#linkTo task task}}details{{/linkTo}}
-              <button {{action "removeTask"}} class="destroy">Delete</button>
+              {{input type=checkbox checked=task.isCompleted}}
+              {{#linkTo task task}}{{task.title}}{{/linkTo}}
+              <button class="btn btn-small edit-btn" {{action editTask task}}>Edit</button>
             {{/if}}
+          </li>
+        {{/each}}
+      </ul>
+
+      <h5>
+        Completed tasks
+        <small>(<a {{action archiveTasks}}>archive</a>)</small>
+      </h5>
+
+      <ul class="completed-task-list">
+        {{#each task in completedTasks itemController="task"}}
+          <li class="completed">
+            {{input type=checkbox checked=task.isCompleted}}
+            {{task.title}}
           </li>
         {{/each}}
       </ul>
@@ -36,13 +51,32 @@
 
     <script type="text/x-handlebars" data-template-name="today">
       <h2>Today</h2>
-      {{view Ember.Select contentBinding=allTasks
+      {{#unless isRunning}}
+      {{view Ember.Select contentBinding=openTasks
                           selectionBinding=selectedTask
                           optionValuePath=content.id
                           optionLabelPath=content.title
                           prompt="Please select a task"}}
 
-      <button {{action start}}>Start</button>
+      <button {{action start}} class="btn">Start</button>
+      {{/unless}}
+      <br>
+      <table class="table">
+        <tr>
+          <th>Started</th>
+          <th>Finished</th>
+          <th>Task</th>
+          <th>Elapsed</th>
+        </tr>
+      {{#each completedLogs}}
+        <tr>
+          <td>{{time startedAt}}</td>
+          <td>{{time finishedAt}}</td>
+          <td>{{task.title}}</td>
+          <td>{{duration elapsedSeconds}}</td>
+        </tr>
+      {{/each}}
+      </table>
     </script>
 
     <script type="text/x-handlebars" data-template-name="task">
@@ -50,14 +84,20 @@
       <label>ID:</label> {{id}}
       <ul>
       {{#each logs}}
-        {{id}} - {{startedAt}} - {{finishedAt}}
+        <li>{{id}} - {{startedAt}} - {{finishedAt}}</li>
       {{/each}}
       </ul>
     </script>
 
     <script type="text/x-handlebars" data-template-name="timer">
-      <h2>{{title}} Running...</h2>
-      <label>Elapsed seconds: {{elapsedSeconds}}</label>
+      {{#if isRunning}}
+        <h2>{{log.task.title}} Running...</h2>
+        <label>Elapsed seconds: {{elapsedSeconds}}</label>
+        <button class="btn" {{action stop}}>Stop</button>
+        <button class="btn" {{action stop}}>Stop and close task</button>
+      {{else}}
+        <strong>No timer is Running</strog>
+      {{/if}}
     </script>
 
     <script src="components/jquery/jquery.js"></script>
@@ -65,6 +105,7 @@
     <script src="components/ember/ember.js"></script>
     <script src="components/ember-data/index.js"></script>
     <script src="components/ember-localstorage/localstorage_adapter.js"></script>
+    <script src="components/moment.js/moment.js"></script>
     <!-- build:js scripts/popup.js -->
     <script src="compiled_js/popup.js"></script>
     <!-- endbuild -->

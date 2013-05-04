@@ -6,7 +6,9 @@
     "handlebars": "~1.0.0-rc.3",
     "ember": "~1.0.0-rc.2",
     "ember-data": "http://builds.emberjs.com.s3.amazonaws.com/ember-data-latest.js",
-    "ember-localstorage": "rpflorence/ember-localstorage-adapter"
+    "ember-localstorage": "rpflorence/ember-localstorage-adapter",
+    "moment.js": "timrwood/moment#2.0.0",
+    "bootstrap": "v2.3.1"
   },
   "devDependencies": {}
 }

@@ -7,22 +7,24 @@ html {
 body {
   min-width: 357px;
   overflow-x: hidden;
+  padding: 20px;
 }
 
 ul.task-list {
   list-style-type: none;
   padding: 0;
+  margin-left: 0;
 
   li {
     padding: 5px;
-    .destroy {
+    .edit-btn {
       float: right;
       display: none;
     }
 
     &:hover {
       background-color: #efefef;
-      .destroy {
+      .edit-btn {
         display: inline;
       }
     }
