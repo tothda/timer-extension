@@ -1,0 +1,35 @@
+/* Will be compiled down to a single stylesheet with your sass files */
+
+html {
+    /* Defaults css for cssmin process */
+}
+
+body {
+  min-width: 357px;
+  overflow-x: hidden;
+}
+
+ul.task-list {
+  list-style-type: none;
+  padding: 0;
+
+  li {
+    padding: 5px;
+    .destroy {
+      float: right;
+      display: none;
+    }
+
+    &:hover {
+      background-color: #efefef;
+      .destroy {
+        display: inline;
+      }
+    }
+  }
+
+  .completed label {
+    text-decoration: line-through;
+    color: gray;
+  }
+}

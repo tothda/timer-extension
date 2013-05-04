@@ -5,3 +5,4 @@ dist
 .sass-cache
 app/components
 app/compiled_js
+app/compiled_css

@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <link href="styles/main.css" rel="stylesheet">
+    <link href="compiled_css/main.css" rel="stylesheet">
 
   </head>
   <body>
@@ -15,10 +15,18 @@
       {{input value=newTaskTitle}}
       <button {{action addTask}}>Add</button>
 
-      <ul>
-      {{#each controller}}
-        <li>{{title}}</li>
-      {{/each}}
+      <ul class="task-list">
+        {{#each task in controller itemController="task"}}
+          <li {{bindAttr class="isCompleted:completed isEditing:editing"}}>
+            {{#if task.isEditing}}
+              {{view App.EditTaskView taskBinding=task}}
+            {{else}}
+              {{input type=checkbox checked=task.isCompleted}} 
+              <label {{action "editTask" on="doubleClick"}}>{{task.title}}</label>
+              <button {{action "removeTask"}} class="destroy">Delete</button>
+            {{/if}}
+          </li>
+        {{/each}}
       </ul>
     </script>
 
@@ -26,7 +34,7 @@
     <script src="components/handlebars/handlebars.js"></script>
     <script src="components/ember/ember.js"></script>
     <script src="components/ember-data/index.js"></script>
-
+    <script src="components/ember-localstorage/localstorage_adapter.js"></script>
     <!-- build:js scripts/popup.js -->
     <script src="compiled_js/popup.js"></script>
     <!-- endbuild -->
