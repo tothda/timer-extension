@@ -53,7 +53,7 @@ App.TaskController = Ember.ObjectController.extend
   taskDidChange: (->
     Ember.run.once =>
       @get('store').commit()
-  ).observes('model.isCompleted')
+  ).observes('isCompleted', 'title')
 
   editTask: ->
     @set('isEditing', true)
@@ -114,11 +114,13 @@ App.ApplicationRoute = Ember.Route.extend
       log = task.get('logs').createRecord
         startedAt: (new Date())
       task.set('runningLog', log)
+      @get('store').commit()
       @transitionTo 'timer'
 
     stopTimer: (task) ->
       task.set('runningLog.finishedAt', new Date())
       task.set('runningLog', null)
+      @get('store').commit()
       @transitionTo 'task', task
 
 App.IndexRoute = Ember.Route.extend
