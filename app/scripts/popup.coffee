@@ -94,10 +94,30 @@ App.EditTaskView = Ember.TextField.extend
     this.$().focus()
 
 App.TodayController = Ember.ArrayController.extend
-  logs: (-> App.Log.find()).property()
+  day: new Date()
+
+  allLogs: (-> App.Log.find()).property()
+
+  logs: (->
+    day = moment(@get('day'))
+    console.log(day)
+    @get('allLogs').filter (log) =>
+      start = moment(log.get('startedAt'))
+      start.isAfter(day.startOf('day')) and
+        start.isBefore(day.endOf('day'))
+  ).property('allLogs.@each.startedAt', 'day')
+
   completedLogs: (->
     @get('logs').filterProperty('isCompleted')
   ).property('logs.@each.isCompleted')
+
+  showPrevious: ->
+    day = moment(@get('day'))
+    @set('day', day.subtract('days', 1))
+
+  showNext: ->
+    day = moment(@get('day'))
+    @set('day', day.add('days', 1))
 
 App.TimerController = Ember.ObjectController.extend
   needs: ['application', 'tasks']
@@ -156,6 +176,9 @@ App.TasksRoute = Ember.Route.extend
 
 Ember.Handlebars.registerBoundHelper 'time', (date) ->
   moment(date).format('HH:mm')
+
+Ember.Handlebars.registerBoundHelper 'monthDay', (date) ->
+  moment(date).format('MMMM D.')
 
 Ember.Handlebars.registerBoundHelper 'duration', (seconds) ->
   if seconds < 60
