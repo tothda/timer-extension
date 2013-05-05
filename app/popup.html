@@ -100,13 +100,12 @@
         <button class="btn" {{action stop}}>Stop and close task</button>
       {{else}}
         <p>Select the task you start working on</p>
-        {{view Ember.Select contentBinding=openTasks
-                            selectionBinding=selectedTask
-                            optionValuePath=content.id
-                            optionLabelPath=content.title
-                            prompt="-- Please select a task --"}}
-
-        <button {{action start}} class="btn">Start</button>
+        {{view App.TimerSelect contentBinding=openTasks
+            selectionBinding=selectedTask
+            optionValuePath=content.id
+            optionLabelPath=content.title
+            prompt="-- Please select a task --"
+            class="input-block-level"}}
       {{/if}}
     </script>
 

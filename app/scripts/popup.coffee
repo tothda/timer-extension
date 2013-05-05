@@ -97,6 +97,12 @@ App.TimerController = Ember.ObjectController.extend
 
   start: -> @send('startTimer', @get('selectedTask'))
 
+App.TimerSelect = Ember.Select.extend
+  selectionDidChange: (->
+    Ember.run.once =>
+      @get('controller').start()
+  ).observes('selection')
+
 App.LOG_TRANSITIONS = true
 
 App.Router.map ->
