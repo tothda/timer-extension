@@ -21,8 +21,7 @@
     </script>
 
     <script type="text/x-handlebars" data-template-name="tasks">
-      {{input type=text value=newTaskTitle placeholder="Add new task"}}
-      <button {{action addTask}} class="btn">Add</button>
+      {{view App.AddTaskField placeholder="Add new task" class="input-block-level"}}
 
       <ul class="task-list">
         {{#each task in controller.openTasks itemController="task"}}

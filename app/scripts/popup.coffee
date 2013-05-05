@@ -50,14 +50,21 @@ App.TasksController = Ember.ArrayController.extend
     @get('tasks').filter (x) -> x.get('isCompleted')
   ).property('tasks.@each.isCompleted')
 
-  addTask: ->
-    @get('store').createRecord(App.Task, {title: @get('newTaskTitle')})
+  addTask: (title) ->
+    @get('store').createRecord(App.Task, {title: title, isArchived: false})
     @get('store').commit()
 
   archiveTasks: ->
     @get('completedTasks').forEach (task) ->
       task.set('isArchived', true)
     @get('store').commit()
+
+App.AddTaskField = Ember.TextField.extend
+  valueBinding: 'newTaskTitle',
+
+  insertNewline: ->
+    @get('controller').addTask(@get('value'))
+    @set('value', '')
 
 App.TaskController = Ember.ObjectController.extend
   taskDidChange: (->
