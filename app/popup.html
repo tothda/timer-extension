@@ -7,17 +7,21 @@
   <body>
     <!-- CHROME EXTENSION POPUP -->
     <script type="text/x-handlebars" data-template-name="application">
-      <nav id="main-navigation">
-        <ul class="nav nav-pills">
-          <li>{{#linkTo timer}}Timer{{/linkTo}}</li>
-          <li>{{#linkTo tasks}}Tasks{{/linkTo}}</li>
-          <li>{{#linkTo today}}History{{/linkTo}}</li>
-        </ul>
-        <hr>
-      </nav>
-      <div>
-        {{outlet}}
-      </div>
+      {{#unless isInitialized}}
+        <strong>Loading...<strong>
+      {{else}}
+        <nav id="main-navigation">
+          <ul class="nav nav-pills">
+            <li>{{#linkTo timer}}Timer{{/linkTo}}</li>
+            <li>{{#linkTo tasks}}Tasks{{/linkTo}}</li>
+            <li>{{#linkTo today}}Activities{{/linkTo}}</li>
+          </ul>
+          <hr>
+        </nav>
+        <div>
+          {{outlet}}
+        </div>
+      {{/unless}}
     </script>
 
     <script type="text/x-handlebars" data-template-name="tasks">
@@ -58,28 +62,32 @@
           <i class="icon-arrow-left"></i>
           Prev
         </button>
-        <strong>{{monthDay day}}</strong>
-        <button {{action showNext}} class="btn btn-small pull-right">
-          <i class="icon-arrow-right"></i>
-          Next
-        </button>
+        {{#unless isToday}}
+          <button {{action showNext}} class="btn btn-small pull-right">
+            Next
+            <i class="icon-arrow-right"></i>
+          </button>
+        {{/unless}}
+        <div class="day"><strong>{{monthDay day}}</strong></div>
       </div>
+      {{#if completedLogs}}
       <table class="table">
         <tr>
-          <th>Started</th>
-          <th>Finished</th>
-          <th>Task</th>
-          <th>Elapsed</th>
+          <th style="width: 20%">Started</th>
+          <th style="width: 60%">Task</th>
+          <th style="width: 20%">Elapsed</th>
         </tr>
       {{#each completedLogs}}
         <tr>
           <td>{{time startedAt}}</td>
-          <td>{{time finishedAt}}</td>
           <td>{{task.title}}</td>
-          <td>{{duration elapsedSeconds}}</td>
+          <td style="text-align: right">{{timer elapsedSeconds}}</td>
         </tr>
       {{/each}}
       </table>
+      {{else}}
+        <p>No saved activity on this day.</p>
+      {{/if}}
     </script>
 
     <script type="text/x-handlebars" data-template-name="task">

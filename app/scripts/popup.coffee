@@ -29,7 +29,7 @@ App.Log = DS.Model.extend
   ).property('startedAt', 'finishedAt')
 
 App.ApplicationController = Ember.Controller.extend
-  tasks: null
+  tasks: (-> App.Task.all()).property()
   running: (->
     @get('tasks').findProperty 'runningLog'
   ).property('tasks.@each.runningLog')
@@ -96,20 +96,25 @@ App.EditTaskView = Ember.TextField.extend
 App.TodayController = Ember.ArrayController.extend
   day: new Date()
 
-  allLogs: (-> App.Log.find()).property()
+  allLogs: (-> App.Log.all()).property()
 
   logs: (->
+    return unless @get('allLogs.isLoaded')
     day = moment(@get('day'))
-    console.log(day)
+    console.log('logs', @get('allLogs.length'))
     @get('allLogs').filter (log) =>
       start = moment(log.get('startedAt'))
       start.isAfter(day.startOf('day')) and
         start.isBefore(day.endOf('day'))
-  ).property('allLogs.@each.startedAt', 'day')
+  ).property('allLogs.isLoaded', 'allLogs.@each.startedAt', 'day')
 
   completedLogs: (->
     @get('logs').filterProperty('isCompleted')
   ).property('logs.@each.isCompleted')
+
+  isToday: (->
+    moment(@get('day')).startOf('day').isSame(moment().startOf('day'))
+  ).property('day')
 
   showPrevious: ->
     day = moment(@get('day'))
@@ -162,7 +167,10 @@ App.Router.map ->
 
 App.ApplicationRoute = Ember.Route.extend
   setupController: (controller) ->
-    controller.set('tasks', App.Task.find())
+    App.Task.find().then ->
+      App.Log.find().then ->
+        Em.run.next ->
+          controller.set('isInitialized', true)
 
   events:
     startTimer: (task) ->

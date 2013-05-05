@@ -75,6 +75,9 @@ ul.open-task-list {
 #log-navigator {
   text-align: center;
   margin: 15px 0;
+  .day {
+    padding: 0 70px;
+  }
 }
 
 #timer-page {
