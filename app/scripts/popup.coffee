@@ -11,6 +11,7 @@ App.Store = DS.Store.extend
 App.Task = DS.Model.extend
   title: DS.attr('string')
   isCompleted: DS.attr('boolean')
+  isArchived: DS.attr('boolean')
   logs: DS.hasMany('App.Log', {inverse: 'task'})
   runningLog: DS.belongsTo('App.Log', {inverse: '_dummy'})
 
@@ -35,11 +36,11 @@ App.ApplicationController = Ember.Controller.extend
   isRunning: Ember.computed.bool('running')
 
 App.TasksController = Ember.ArrayController.extend
-  tasks: (-> App.Task.all()).property()
+  allTasks: (-> App.Task.all()).property()
 
-  addTask: ->
-    @get('store').createRecord(App.Task, {title: @get('newTaskTitle')})
-    @get('store').commit()
+  tasks: (->
+    @get('allTasks').filterProperty('isArchived', false)
+  ).property('allTasks.@each.isArchived')
 
   openTasks: (->
     @get('tasks').filter (x) -> !x.get('isCompleted')
@@ -48,6 +49,15 @@ App.TasksController = Ember.ArrayController.extend
   completedTasks: (->
     @get('tasks').filter (x) -> x.get('isCompleted')
   ).property('tasks.@each.isCompleted')
+
+  addTask: ->
+    @get('store').createRecord(App.Task, {title: @get('newTaskTitle')})
+    @get('store').commit()
+
+  archiveTasks: ->
+    @get('completedTasks').forEach (task) ->
+      task.set('isArchived', true)
+    @get('store').commit()
 
 App.TaskController = Ember.ObjectController.extend
   taskDidChange: (->
