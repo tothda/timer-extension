@@ -72,13 +72,22 @@
     </script>
 
     <script type="text/x-handlebars" data-template-name="task">
-      <h2>{{title}}</h2>
-      <label>ID:</label> {{id}}
-      <ul>
+      <h2>{{title}} <small>({{id}})</small></h2>
+
+      <table class="table">
+        <tr>
+          <th>Started</th>
+          <th>Finished</th>
+          <th>Elapsed</th>
+        </tr>
       {{#each logs}}
-        <li>{{id}} - {{startedAt}} - {{finishedAt}}</li>
+        <tr>
+          <td>{{time startedAt}}</td>
+          <td>{{time finishedAt}}</td>
+          <td>{{duration elapsedSeconds}}</td>
+        </tr>
       {{/each}}
-      </ul>
+      </table>
     </script>
 
     <script type="text/x-handlebars" data-template-name="timer">
