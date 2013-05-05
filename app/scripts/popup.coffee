@@ -125,12 +125,23 @@ App.TimerController = Ember.ObjectController.extend
   openTasks: Ember.computed.alias('controllers.tasks.openTasks')
   isRunning: Ember.computed.alias('controllers.application.isRunning')
   log: Ember.computed.alias('controllers.application.running.runningLog')
+  time: null # holds the current time
+
+  init: ->
+    @_super()
+    setInterval (=> (Em.run => @set('time', new Date()))), 100
 
   elapsedSeconds: (->
-    (new Date()) - @get('log.startedAt')
-  ).property('log.startedAt')
+    Math.floor((@get('time') - @get('log.startedAt')) / 1000)
+  ).property('log.startedAt', 'time')
 
-  stop: -> @send('stopTimer', @get('log.task'))
+  stop: ->
+    @set('selectedTask', null)
+    @send('stopTimer', @get('log.task'))
+
+  stopAndClose: ->
+    @get('log.task').set('isCompleted', true)
+    @stop()
 
   start: -> @send('startTimer', @get('selectedTask'))
 
@@ -185,10 +196,21 @@ Ember.Handlebars.registerBoundHelper 'duration', (seconds) ->
   if seconds < 60
     "%@s".fmt(seconds)
   else if 60 <= seconds and seconds < 3600
-    "%@m".fmt(Math.floor(seconds/60))
+    min = Math.floor(seconds/60)
+    sec = seconds - (min * 60)
+    "%@m %@s".fmt(min, sec)
   else
     hour = Math.floor(seconds/3600)
     min = Math.floor((seconds - hour * 3600) / 60)
     "%@h %@m".fmt(hour, min)
 
-
+Ember.Handlebars.registerBoundHelper 'timer', (seconds) ->
+  hour = Math.floor(seconds/3600)
+  min = Math.floor((seconds - hour * 3600) / 60)
+  sec = seconds - hour * 3600 - min * 60
+  min = "0" + min if min < 10
+  sec = "0" + sec if sec < 10
+  if hour is 0
+    "%@:%@".fmt(min, sec)
+  else
+    "%@:%@:%@".fmt(hour, min, sec)

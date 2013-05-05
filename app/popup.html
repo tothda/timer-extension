@@ -102,11 +102,13 @@
     </script>
 
     <script type="text/x-handlebars" data-template-name="timer">
+      <div id="timer-page">
       {{#if isRunning}}
-        <h2>{{log.task.title}} Running...</h2>
-        <label>Elapsed seconds: {{elapsedSeconds}}</label>
-        <button class="btn" {{action stop}}>Stop</button>
-        <button class="btn" {{action stop}}>Stop and close task</button>
+        <h4 class="title">{{log.task.title}}</h4>
+        <h2 class="timer">{{timer elapsedSeconds}}</h2>
+        <hr>
+        <button class="btn" {{action stopAndClose}}>Stop and close task</button>
+        <button class="btn pull-right" {{action stop}}>Stop timer</button>
       {{else}}
         <p>Select the task you start working on</p>
         {{view App.TimerSelect contentBinding=openTasks
@@ -116,6 +118,7 @@
             prompt="-- Please select a task --"
             class="input-block-level"}}
       {{/if}}
+      </div>
     </script>
 
     <script src="components/jquery/jquery.js"></script>

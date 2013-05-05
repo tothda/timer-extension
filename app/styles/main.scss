@@ -11,6 +11,10 @@ body {
   font-size: 14px;
 }
 
+hr {
+  margin: 10px 0;
+}
+
 #main-navigation {
   .nav-pills {
     margin-bottom: 0;
@@ -24,10 +28,6 @@ body {
       color: white;
       background-color: #08c;
     };
-  }
-
-  hr {
-    margin: 10px 0;
   }
 }
 
@@ -75,4 +75,10 @@ ul.open-task-list {
 #log-navigator {
   text-align: center;
   margin: 15px 0;
+}
+
+#timer-page {
+  .timer, .title {
+    text-align: center;
+  }
 }
