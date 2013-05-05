@@ -7,17 +7,21 @@
   <body>
     <!-- CHROME EXTENSION POPUP -->
     <script type="text/x-handlebars" data-template-name="application">
-      {{#linkTo today}}Today{{/linkTo}} |
-      {{#linkTo tasks}}Tasks{{/linkTo}} |
-      {{#linkTo timer}}Timer{{/linkTo}}
+      <nav id="main-navigation">
+        <ul class="nav nav-pills">
+          <li>{{#linkTo timer}}Timer{{/linkTo}}</li>
+          <li>{{#linkTo tasks}}Tasks{{/linkTo}}</li>
+          <li>{{#linkTo today}}Today{{/linkTo}}</li>
+        </ul>
+        <hr>
+      </nav>
       <div>
-      {{outlet}}
+        {{outlet}}
       </div>
     </script>
 
     <script type="text/x-handlebars" data-template-name="tasks">
-      <h4>Tasks</h4>
-      {{input value=newTaskTitle}}
+      {{input type=text value=newTaskTitle placeholder="Add new task"}}
       <button {{action addTask}} class="btn">Add</button>
 
       <ul class="task-list">
@@ -50,9 +54,7 @@
     </script>
 
     <script type="text/x-handlebars" data-template-name="today">
-      <h2>Today</h2>
-
-      <br>
+      <p>This is the list of the activities started today.</p>
       <table class="table">
         <tr>
           <th>Started</th>
@@ -72,7 +74,7 @@
     </script>
 
     <script type="text/x-handlebars" data-template-name="task">
-      <h2>{{title}} <small>({{id}})</small></h2>
+      <h4>{{title}} <small>({{id}})</small></h4>
 
       <table class="table">
         <tr>
@@ -97,11 +99,12 @@
         <button class="btn" {{action stop}}>Stop</button>
         <button class="btn" {{action stop}}>Stop and close task</button>
       {{else}}
+        <p>Select the task you start working on</p>
         {{view Ember.Select contentBinding=openTasks
                             selectionBinding=selectedTask
                             optionValuePath=content.id
                             optionLabelPath=content.title
-                            prompt="Please select a task"}}
+                            prompt="-- Please select a task --"}}
 
         <button {{action start}} class="btn">Start</button>
       {{/if}}

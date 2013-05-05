@@ -7,8 +7,30 @@ html {
 body {
   min-width: 357px;
   overflow-x: hidden;
-  padding: 20px;
+  padding: 10px;
 }
+
+#main-navigation {
+  .nav-pills {
+    margin-bottom: 0;
+  }
+  .nav-pills > li > a {
+    padding: 4px 8px;
+
+    &.active,
+    &.active:hover,
+    &.active:focus {
+      color: white;
+      background-color: #08c;
+    };
+  }
+
+  hr {
+    margin: 10px 0;
+  }
+}
+
+
 
 ul.task-list {
   list-style-type: none;
