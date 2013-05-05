@@ -136,8 +136,9 @@ App.TimerController = Ember.ObjectController.extend
 
 App.TimerSelect = Ember.Select.extend
   selectionDidChange: (->
-    Ember.run.once =>
-      @get('controller').start()
+    # return if the select becomes empty (immediately after render)
+    return unless @get('selection')
+    Ember.run.once => @get('controller').start()
   ).observes('selection')
 
 App.LOG_TRANSITIONS = true
