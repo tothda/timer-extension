@@ -27,11 +27,11 @@
         {{#each task in controller.openTasks itemController="task"}}
           <li {{bindAttr class="isEditing:editing"}}>
             {{#if task.isEditing}}
-              {{view App.EditTaskView taskBinding=task}}
+              {{view App.EditTaskView taskBinding=task class="input-block-level"}}
             {{else}}
               {{input type=checkbox checked=task.isCompleted}}
               {{#linkTo task task}}{{task.title}}{{/linkTo}}
-              <button class="btn btn-small edit-btn" {{action editTask task}}>Edit</button>
+              <small><a class="edit-task-handle" href="#" {{action editTask task}}>edit</a></small>
             {{/if}}
           </li>
         {{/each}}

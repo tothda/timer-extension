@@ -39,15 +39,21 @@ ul.task-list {
 
   li {
     padding: 5px;
-    .edit-btn {
-      float: right;
+    border-bottom: 1px solid #eee;
+    .edit-task-handle {
       display: none;
+      margin-left: 5px;
+      float: right;
+    }
+
+    input[type=checkbox] {
+      margin: 0 5px 0 0;
     }
 
     &:hover {
-      background-color: #efefef;
-      .edit-btn {
+      .edit-task-handle {
         display: inline;
+        color: gray;
       }
     }
   }
