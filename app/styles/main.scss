@@ -30,24 +30,36 @@ body {
   }
 }
 
-
-
 ul.task-list {
   list-style-type: none;
   padding: 0;
   margin-left: 0;
 
   li {
+    padding: 0 5px;
+    input[type=checkbox] {
+      margin: 0 5px 0 0;
+    }
+  }
+}
+
+ul.completed-task-list {
+  li {
+    color: gray;
+    text-decoration: line-through;
+    font-size: 12px;
+  }
+}
+
+ul.open-task-list {
+  li {
     padding: 5px;
     border-bottom: 1px solid #eee;
+
     .edit-task-handle {
       display: none;
       margin-left: 5px;
       float: right;
-    }
-
-    input[type=checkbox] {
-      margin: 0 5px 0 0;
     }
 
     &:hover {
@@ -56,10 +68,5 @@ ul.task-list {
         color: gray;
       }
     }
-  }
-
-  .completed label {
-    text-decoration: line-through;
-    color: gray;
   }
 }

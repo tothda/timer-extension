@@ -23,7 +23,7 @@
     <script type="text/x-handlebars" data-template-name="tasks">
       {{view App.AddTaskField placeholder="Add new task" class="input-block-level"}}
 
-      <ul class="task-list">
+      <ul class="open-task-list task-list">
         {{#each task in controller.openTasks itemController="task"}}
           <li {{bindAttr class="isEditing:editing"}}>
             {{#if task.isEditing}}
@@ -42,7 +42,7 @@
         <small>(<a {{action archiveTasks}} href="#">archive all completed</a>)</small>
       </h5>
 
-      <ul class="completed-task-list">
+      <ul class="completed-task-list task-list">
         {{#each task in completedTasks itemController="task"}}
           <li class="completed">
             {{input type=checkbox checked=task.isCompleted}}
