@@ -101,7 +101,7 @@ App.EditTaskView = Ember.TextField.extend
   didInsertElement: ->
     this.$().focus()
 
-App.TodayController = Ember.ArrayController.extend
+App.LogsController = Ember.ArrayController.extend
   day: new Date()
 
   allLogs: (-> App.Log.all()).property()
@@ -170,7 +170,7 @@ App.LOG_TRANSITIONS = true
 App.Router.map ->
   @resource 'tasks', ->
     @resource 'task', path: '/tasks/:task_id'
-  @resource 'today'
+  @resource 'logs'
   @resource 'timer'
 
 App.ApplicationRoute = Ember.Route.extend

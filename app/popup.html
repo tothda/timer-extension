@@ -14,7 +14,7 @@
           <ul class="nav nav-pills">
             <li>{{#linkTo timer}}Timer{{/linkTo}}</li>
             <li>{{#linkTo tasks}}Tasks{{/linkTo}}</li>
-            <li>{{#linkTo today}}Activities{{/linkTo}}</li>
+            <li>{{#linkTo logs}}Activities{{/linkTo}}</li>
           </ul>
           <hr>
         </nav>
@@ -60,7 +60,7 @@
       </ul>
     </script>
 
-    <script type="text/x-handlebars" data-template-name="today">
+    <script type="text/x-handlebars" data-template-name="logs">
       <div id="log-navigator">
         <button {{action showPrevious}} class="btn btn-small pull-left">
           <i class="icon-arrow-left"></i>
