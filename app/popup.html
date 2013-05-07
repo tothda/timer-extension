@@ -25,6 +25,10 @@
     </script>
 
     <script type="text/x-handlebars" data-template-name="tasks">
+      {{outlet}}
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="tasks/index">
       {{view App.AddTaskField placeholder="Add new task" class="input-block-level"}}
 
       <ul class="open-task-list task-list">
@@ -91,6 +95,7 @@
     </script>
 
     <script type="text/x-handlebars" data-template-name="task">
+      <small>{{#linkTo tasks}}&larr; Back to all tasks{{/linkTo}}</small>
       <h4>{{title}} <small>({{id}})</small></h4>
 
       <table class="table">

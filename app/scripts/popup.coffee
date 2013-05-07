@@ -59,6 +59,11 @@ App.TasksController = Ember.ArrayController.extend
       task.set('isArchived', true)
     @get('store').commit()
 
+App.TasksIndexController = Ember.Controller.extend
+  needs: ['tasks']
+  openTasks: Ember.computed.alias('controllers.tasks.openTasks')
+  completedTasks: Ember.computed.alias('controllers.tasks.completedTasks')
+
 App.AddTaskField = Ember.TextField.extend
   valueBinding: 'newTaskTitle',
 
@@ -79,6 +84,9 @@ App.TaskController = Ember.ObjectController.extend
     task = @get('model')
     task.deleteRecord()
     @get('store').commit()
+
+  back: ->
+    history.back()
 
 App.EditTaskView = Ember.TextField.extend
   classNames: ['edit']
@@ -160,8 +168,8 @@ App.TimerSelect = Ember.Select.extend
 App.LOG_TRANSITIONS = true
 
 App.Router.map ->
-  @resource 'tasks'
-  @resource 'task', path: '/tasks/:task_id'
+  @resource 'tasks', ->
+    @resource 'task', path: '/tasks/:task_id'
   @resource 'today'
   @resource 'timer'
 
