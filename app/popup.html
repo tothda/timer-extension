@@ -89,7 +89,9 @@
         {{#each log in logsOnDay}}
           <tr>
             <td>{{time log.startedAt}}</td>
-            <td>{{#linkTo task log.task}}{{log.task.title}}{{/linkTo}}</td>
+            <td {{bindAttr class="log.task.isCompleted:completed"}}>
+              {{#linkTo task log.task}}{{log.task.title}}{{/linkTo}}
+            </td>
             <td class="log-duration">{{duration elapsedSeconds}}</td>
           </tr>
         {{/each}}

@@ -85,6 +85,11 @@ ul.open-task-list {
     .log-duration {
       text-align: right;
     }
+
+    td.completed a {
+      text-decoration: line-through;
+      color: gray;
+    }
   }
 }
 
