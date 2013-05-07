@@ -222,7 +222,10 @@ App.LogsRoute = Ember.Route.extend
     App.Log.all()
 
 Ember.Handlebars.registerBoundHelper 'time', (date) ->
-  moment(date).format('HH:mm')
+  if date?
+    moment(date).format('HH:mm')
+  else
+    "-"
 
 Ember.Handlebars.registerBoundHelper 'monthDay', (date) ->
   moment(date).format('MMMM D.')

@@ -89,7 +89,7 @@
         {{#each log in logsOnDay}}
           <tr>
             <td>{{time log.startedAt}}</td>
-            <td>{{log.task.title}}</td>
+            <td>{{#linkTo task log.task}}{{log.task.title}}{{/linkTo}}</td>
             <td class="log-duration">{{duration elapsedSeconds}}</td>
           </tr>
         {{/each}}
@@ -110,10 +110,10 @@
           <th>Finished</th>
           <th>Elapsed</th>
         </tr>
-      {{#each logs}}
+      {{#each log in logs itemController="log"}}
         <tr>
-          <td>{{time startedAt}}</td>
-          <td>{{time finishedAt}}</td>
+          <td>{{time log.startedAt}}</td>
+          <td>{{time log.finishedAt}}</td>
           <td>{{duration elapsedSeconds}}</td>
         </tr>
       {{/each}}
@@ -123,7 +123,7 @@
     <script type="text/x-handlebars" data-template-name="timer">
       <div id="timer-page">
       {{#if isRunning}}
-        <h4 class="title">{{log.task.title}}</h4>
+        <h4 class="title">{{#linkTo task log.task}}{{log.task.title}}{{/linkTo}}</h4>
         <h2 class="timer">{{duration elapsedSeconds}}</h2>
         <hr>
         <button class="btn" {{action stopAndClose}}>Stop and close task</button>
