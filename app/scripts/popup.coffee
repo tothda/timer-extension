@@ -50,6 +50,11 @@ App.TasksController = Ember.ArrayController.extend
     @get('tasks').filter (x) -> x.get('isCompleted')
   ).property('tasks.@each.isCompleted')
 
+App.TasksIndexController = Ember.Controller.extend
+  needs: ['tasks']
+  openTasks: Ember.computed.alias('controllers.tasks.openTasks')
+  completedTasks: Ember.computed.alias('controllers.tasks.completedTasks')
+
   addTask: (title) ->
     @get('store').createRecord(App.Task, {title: title, isArchived: false})
     @get('store').commit()
@@ -58,11 +63,6 @@ App.TasksController = Ember.ArrayController.extend
     @get('completedTasks').forEach (task) ->
       task.set('isArchived', true)
     @get('store').commit()
-
-App.TasksIndexController = Ember.Controller.extend
-  needs: ['tasks']
-  openTasks: Ember.computed.alias('controllers.tasks.openTasks')
-  completedTasks: Ember.computed.alias('controllers.tasks.completedTasks')
 
 App.AddTaskField = Ember.TextField.extend
   valueBinding: 'newTaskTitle',
