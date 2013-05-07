@@ -201,18 +201,6 @@ Ember.Handlebars.registerBoundHelper 'monthDay', (date) ->
   moment(date).format('MMMM D.')
 
 Ember.Handlebars.registerBoundHelper 'duration', (seconds) ->
-  if seconds < 60
-    "%@s".fmt(seconds)
-  else if 60 <= seconds and seconds < 3600
-    min = Math.floor(seconds/60)
-    sec = seconds - (min * 60)
-    "%@m %@s".fmt(min, sec)
-  else
-    hour = Math.floor(seconds/3600)
-    min = Math.floor((seconds - hour * 3600) / 60)
-    "%@h %@m".fmt(hour, min)
-
-Ember.Handlebars.registerBoundHelper 'timer', (seconds) ->
   hour = Math.floor(seconds/3600)
   min = Math.floor((seconds - hour * 3600) / 60)
   sec = seconds - hour * 3600 - min * 60

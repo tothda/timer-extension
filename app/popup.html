@@ -81,7 +81,7 @@
         <tr>
           <td>{{time startedAt}}</td>
           <td>{{task.title}}</td>
-          <td style="text-align: right">{{timer elapsedSeconds}}</td>
+          <td style="text-align: right">{{duration elapsedSeconds}}</td>
         </tr>
       {{/each}}
       </table>
@@ -113,7 +113,7 @@
       <div id="timer-page">
       {{#if isRunning}}
         <h4 class="title">{{log.task.title}}</h4>
-        <h2 class="timer">{{timer elapsedSeconds}}</h2>
+        <h2 class="timer">{{duration elapsedSeconds}}</h2>
         <hr>
         <button class="btn" {{action stopAndClose}}>Stop and close task</button>
         <button class="btn pull-right" {{action stop}}>Stop timer</button>
