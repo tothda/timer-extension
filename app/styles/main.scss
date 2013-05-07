@@ -72,16 +72,27 @@ ul.open-task-list {
   }
 }
 
-#log-navigator {
-  text-align: center;
-  margin: 15px 0;
-  .day {
-    padding: 0 70px;
+#logs-page {
+  #log-navigator {
+    text-align: center;
+    margin: 15px 0;
+    .day {
+      padding: 0 70px;
+    }
+  }
+
+  .logs-table {
+    .log-duration {
+      text-align: right;
+    }
   }
 }
+
 
 #timer-page {
   .timer, .title {
     text-align: center;
   }
 }
+
+// Logs page

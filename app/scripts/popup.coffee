@@ -29,11 +29,18 @@ App.Log = DS.Model.extend
   ).property('startedAt', 'finishedAt')
 
 App.ApplicationController = Ember.Controller.extend
-  tasks: (-> App.Task.all()).property()
+  time: null # holds the current time
+  isRunning: Ember.computed.bool('running')
+
   running: (->
     @get('tasks').findProperty 'runningLog'
   ).property('tasks.@each.runningLog')
-  isRunning: Ember.computed.bool('running')
+
+  init: ->
+    @_super()
+    setInterval (=> (Em.run => @set('time', new Date()))), 100
+
+  tasks: (-> App.Task.all()).property()
 
 App.TasksController = Ember.ArrayController.extend
   allTasks: (-> App.Task.all()).property()
@@ -102,23 +109,24 @@ App.EditTaskView = Ember.TextField.extend
     this.$().focus()
 
 App.LogsController = Ember.ArrayController.extend
+  itemController: 'log'
+  sortProperties: ['startedAt']
+  sortAscending: false
   day: new Date()
 
-  allLogs: (-> App.Log.all()).property()
+  content: (-> App.Log.all()).property()
 
-  logs: (->
-    return unless @get('allLogs.isLoaded')
+  logsOnDay: (->
     day = moment(@get('day'))
-    console.log('logs', @get('allLogs.length'))
-    @get('allLogs').filter (log) =>
+    @filter (log) =>
       start = moment(log.get('startedAt'))
       start.isAfter(day.startOf('day')) and
         start.isBefore(day.endOf('day'))
-  ).property('allLogs.isLoaded', 'allLogs.@each.startedAt', 'day')
+  ).property('@each.startedAt', 'day')
 
-  completedLogs: (->
-    @get('logs').filterProperty('isCompleted')
-  ).property('logs.@each.isCompleted')
+  totalSecondsCompleted: (->
+    @get('logsOnDay').reduce ((acc, item) -> acc + item.get('elapsedSeconds')), 0
+  ).property('logsOnDay.@each.elapsedSeconds')
 
   isToday: (->
     moment(@get('day')).startOf('day').isSame(moment().startOf('day'))
@@ -132,17 +140,24 @@ App.LogsController = Ember.ArrayController.extend
     day = moment(@get('day'))
     @set('day', day.add('days', 1))
 
+App.LogController = Ember.ObjectController.extend
+  needs: ['application']
+  time: Ember.computed.alias('controllers.application.time')
+
+  elapsedSeconds: (->
+    if @get('model.isCompleted')
+      @get('model.elapsedSeconds')
+    else
+      Math.floor((@get('time') - @get('model.startedAt')) / 1000)
+  ).property('model.elapsedSeconds', 'model.isCompleted', 'time')
+
 App.TimerController = Ember.ObjectController.extend
   needs: ['application', 'tasks']
   selectedTask: null
   openTasks: Ember.computed.alias('controllers.tasks.openTasks')
   isRunning: Ember.computed.alias('controllers.application.isRunning')
   log: Ember.computed.alias('controllers.application.running.runningLog')
-  time: null # holds the current time
-
-  init: ->
-    @_super()
-    setInterval (=> (Em.run => @set('time', new Date()))), 100
+  time: Ember.computed.alias('controllers.application.time')
 
   elapsedSeconds: (->
     Math.floor((@get('time') - @get('log.startedAt')) / 1000)
@@ -201,6 +216,10 @@ App.IndexRoute = Ember.Route.extend
 App.TasksRoute = Ember.Route.extend
   model: ->
     App.Task.all()
+
+App.LogsRoute = Ember.Route.extend
+  model: ->
+    App.Log.all()
 
 Ember.Handlebars.registerBoundHelper 'time', (date) ->
   moment(date).format('HH:mm')

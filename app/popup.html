@@ -61,37 +61,43 @@
     </script>
 
     <script type="text/x-handlebars" data-template-name="logs">
-      <div id="log-navigator">
-        <button {{action showPrevious}} class="btn btn-small pull-left">
-          <i class="icon-arrow-left"></i>
-          Prev
-        </button>
-        {{#unless isToday}}
-          <button {{action showNext}} class="btn btn-small pull-right">
-            Next
-            <i class="icon-arrow-right"></i>
+      <div id="logs-page">
+        <div id="log-navigator">
+          <button {{action showPrevious}} class="btn btn-small pull-left">
+            <i class="icon-arrow-left"></i>
+            Prev
           </button>
-        {{/unless}}
-        <div class="day"><strong>{{monthDay day}}</strong></div>
+          {{#unless isToday}}
+            <button {{action showNext}} class="btn btn-small pull-right">
+              Next
+              <i class="icon-arrow-right"></i>
+            </button>
+          {{/unless}}
+          <div class="day"><strong>{{monthDay day}}</strong></div>
+        </div>
+        {{#if logsOnDay}}
+        <table class="table logs-table">
+          <tr>
+            <th colspan="2">Total time:</th>
+            <th class="log-duration">{{duration totalSecondsCompleted}}</th>
+          </tr>
+          <tr>
+            <th style="width: 20%">Started</th>
+            <th style="width: 60%">Task</th>
+            <th style="width: 20%">Elapsed</th>
+          </tr>
+        {{#each log in logsOnDay}}
+          <tr>
+            <td>{{time log.startedAt}}</td>
+            <td>{{log.task.title}}</td>
+            <td class="log-duration">{{duration elapsedSeconds}}</td>
+          </tr>
+        {{/each}}
+        </table>
+        {{else}}
+          <p>No saved activity on this day.</p>
+        {{/if}}
       </div>
-      {{#if completedLogs}}
-      <table class="table">
-        <tr>
-          <th style="width: 20%">Started</th>
-          <th style="width: 60%">Task</th>
-          <th style="width: 20%">Elapsed</th>
-        </tr>
-      {{#each completedLogs}}
-        <tr>
-          <td>{{time startedAt}}</td>
-          <td>{{task.title}}</td>
-          <td style="text-align: right">{{duration elapsedSeconds}}</td>
-        </tr>
-      {{/each}}
-      </table>
-      {{else}}
-        <p>No saved activity on this day.</p>
-      {{/if}}
     </script>
 
     <script type="text/x-handlebars" data-template-name="task">
