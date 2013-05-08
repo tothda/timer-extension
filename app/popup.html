@@ -132,13 +132,11 @@
       <table class="table">
         <tr>
           <th>Started</th>
-          <th>Finished</th>
           <th>Elapsed</th>
         </tr>
       {{#each log in logs itemController="log"}}
         <tr>
-          <td>{{time log.startedAt}}</td>
-          <td>{{time log.finishedAt}}</td>
+          <td>{{dayTime log.startedAt}}</td>
           <td>{{duration elapsedSeconds}}</td>
         </tr>
       {{/each}}

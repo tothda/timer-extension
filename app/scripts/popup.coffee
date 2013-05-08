@@ -248,6 +248,9 @@ Ember.Handlebars.registerBoundHelper 'time', (date) ->
 Ember.Handlebars.registerBoundHelper 'monthDay', (date) ->
   moment(date).format('MMMM D.')
 
+Ember.Handlebars.registerBoundHelper 'dayTime', (date) ->
+  moment(date).format('MMMM D. - HH:mm')
+
 Ember.Handlebars.registerBoundHelper 'duration', (seconds) ->
   hour = Math.floor(seconds/3600)
   min = Math.floor((seconds - hour * 3600) / 60)
