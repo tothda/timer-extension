@@ -75,6 +75,7 @@
           {{/unless}}
           <div class="day"><strong>{{monthDay day}}</strong></div>
         </div>
+
         {{#if logsOnDay}}
         <table class="table logs-table">
           <tr>
@@ -82,19 +83,37 @@
             <th class="log-duration">{{duration totalSecondsCompleted}}</th>
           </tr>
           <tr>
-            <th style="width: 20%">Started</th>
-            <th style="width: 60%">Task</th>
-            <th style="width: 20%">Elapsed</th>
+            <td colspan="3"><label>{{input type=checkbox checked=showGrouped}} show grouped</label></td>
           </tr>
-        {{#each log in logsOnDay}}
-          <tr>
-            <td>{{time log.startedAt}}</td>
-            <td {{bindAttr class="log.task.isCompleted:completed"}}>
-              {{#linkTo task log.task}}{{log.task.title}}{{/linkTo}}
-            </td>
-            <td class="log-duration">{{duration elapsedSeconds}}</td>
-          </tr>
-        {{/each}}
+          {{#if showGrouped}}
+            <tr>
+              <th style="width: 80%">Task</th>
+              <th style="width: 20%">Elapsed</th>
+            </tr>
+            {{#each log in logsOnDayByTask}}
+              <tr>
+                <td {{bindAttr class="log.task.isCompleted:completed"}} colspan=2>
+                  {{#linkTo task log.task}}{{log.task.title}}{{/linkTo}}
+                </td>
+                <td class="log-duration">{{duration log.elapsedSeconds}}</td>
+              </tr>
+            {{/each}}
+          {{else}}
+            <tr>
+              <th style="width: 20%">Started</th>
+              <th style="width: 60%">Task</th>
+              <th style="width: 20%">Elapsed</th>
+            </tr>
+            {{#each log in logsOnDay}}
+              <tr>
+                <td>{{time log.startedAt}}</td>
+                <td {{bindAttr class="log.task.isCompleted:completed"}}>
+                  {{#linkTo task log.task}}{{log.task.title}}{{/linkTo}}
+                </td>
+                <td class="log-duration">{{duration elapsedSeconds}}</td>
+              </tr>
+            {{/each}}
+          {{/if}}
         </table>
         {{else}}
           <p>No saved activity on this day.</p>

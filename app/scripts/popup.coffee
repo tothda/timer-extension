@@ -112,6 +112,7 @@ App.LogsController = Ember.ArrayController.extend
   itemController: 'log'
   sortProperties: ['startedAt']
   sortAscending: false
+  showGrouped: true
   day: new Date()
 
   content: (-> App.Log.all()).property()
@@ -123,6 +124,23 @@ App.LogsController = Ember.ArrayController.extend
       start.isAfter(day.startOf('day')) and
         start.isBefore(day.endOf('day'))
   ).property('@each.startedAt', 'day')
+
+  logsOnDayByTask: (->
+    aggregate = @get('logsOnDay').reduce (acc, log) ->
+      id = log.get('task.id')
+      item = if acc[id]?
+        acc[id]
+      else
+        acc[id] = Ember.Object.create
+          task: log.get('task')
+          elapsedSeconds: 0
+      item.incrementProperty('elapsedSeconds', log.get('elapsedSeconds'))
+      acc
+    , {}
+
+    Ember.ArrayController.create
+      content: (item for id, item of aggregate)
+  ).property('logsOnDay.@each.elapsedSeconds')
 
   totalSecondsCompleted: (->
     @get('logsOnDay').reduce ((acc, item) -> acc + item.get('elapsedSeconds')), 0
