@@ -8,7 +8,11 @@ body {
   min-width: 300px;
   overflow-x: hidden;
   padding: 10px;
-  font-size: 14px;
+}
+
+// FIXME: bootstrap's @baseFontSize should be adjusted, instead of this
+body, input, label, .btn {
+  font-size: 13px;
 }
 
 hr {

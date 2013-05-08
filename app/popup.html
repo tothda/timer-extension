@@ -63,12 +63,12 @@
     <script type="text/x-handlebars" data-template-name="logs">
       <div id="logs-page">
         <div id="log-navigator">
-          <button {{action showPrevious}} class="btn btn-small pull-left">
+          <button {{action showPrevious}} class="btn btn-mini pull-left">
             <i class="icon-arrow-left"></i>
             Prev
           </button>
           {{#unless isToday}}
-            <button {{action showNext}} class="btn btn-small pull-right">
+            <button {{action showNext}} class="btn btn-mini pull-right">
               Next
               <i class="icon-arrow-right"></i>
             </button>
@@ -83,7 +83,11 @@
             <th class="log-duration">{{duration totalSecondsCompleted}}</th>
           </tr>
           <tr>
-            <td colspan="3"><label>{{input type=checkbox checked=showGrouped}} show grouped</label></td>
+            <td colspan="3">
+              <label class="checkbox">
+                {{input type=checkbox checked=showGrouped}} show grouped
+              </label>
+            </td>
           </tr>
           {{#if showGrouped}}
             <tr>
@@ -147,8 +151,14 @@
         <h4 class="title">{{#linkTo task log.task}}{{log.task.title}}{{/linkTo}}</h4>
         <h2 class="timer">{{duration elapsedSeconds}}</h2>
         <hr>
-        <button class="btn" {{action stopAndClose}}>Stop and close task</button>
-        <button class="btn pull-right" {{action stop}}>Stop timer</button>
+        <button class="btn btn-small" {{action stopAndClose}}>
+          <i class="icon-ok"></i>
+          Stop and close task
+        </button>
+        <button class="btn btn-small pull-right" {{action stop}}>
+          <i class="icon-stop"></i>
+          Stop timer
+        </button>
       {{else}}
         <p>Select the task you start working on</p>
         {{view App.TimerSelect contentBinding=openTasks
