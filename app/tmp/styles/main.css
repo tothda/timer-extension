@@ -1,0 +1,99 @@
+/* Will be compiled down to a single stylesheet with your sass files */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/tothda\/src\/hiperk\/timer-extension\/app\/styles\/main\.scss}line{font-family:\000033}}
+html {
+  /* Defaults css for cssmin process */
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/tothda\/src\/hiperk\/timer-extension\/app\/styles\/main\.scss}line{font-family:\000037}}
+body {
+  min-width: 300px;
+  overflow-x: hidden;
+  padding: 10px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/tothda\/src\/hiperk\/timer-extension\/app\/styles\/main\.scss}line{font-family:\0000314}}
+body, input, label, .btn {
+  font-size: 13px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/tothda\/src\/hiperk\/timer-extension\/app\/styles\/main\.scss}line{font-family:\0000318}}
+hr {
+  margin: 10px 0;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/tothda\/src\/hiperk\/timer-extension\/app\/styles\/main\.scss}line{font-family:\0000323}}
+#main-navigation .nav-pills {
+  margin-bottom: 0;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/tothda\/src\/hiperk\/timer-extension\/app\/styles\/main\.scss}line{font-family:\0000326}}
+#main-navigation .nav-pills > li > a {
+  padding: 4px 8px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/tothda\/src\/hiperk\/timer-extension\/app\/styles\/main\.scss}line{font-family:\0000331}}
+#main-navigation .nav-pills > li > a.active, #main-navigation .nav-pills > li > a.active:hover, #main-navigation .nav-pills > li > a.active:focus {
+  color: white;
+  background-color: #08c;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/tothda\/src\/hiperk\/timer-extension\/app\/styles\/main\.scss}line{font-family:\0000338}}
+ul.task-list {
+  list-style-type: none;
+  padding: 0;
+  margin-left: 0;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/tothda\/src\/hiperk\/timer-extension\/app\/styles\/main\.scss}line{font-family:\0000343}}
+ul.task-list li {
+  padding: 0 5px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/tothda\/src\/hiperk\/timer-extension\/app\/styles\/main\.scss}line{font-family:\0000345}}
+ul.task-list li input[type=checkbox] {
+  margin: 0 5px 0 0;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/tothda\/src\/hiperk\/timer-extension\/app\/styles\/main\.scss}line{font-family:\0000352}}
+ul.completed-task-list li {
+  color: gray;
+  text-decoration: line-through;
+  font-size: 12px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/tothda\/src\/hiperk\/timer-extension\/app\/styles\/main\.scss}line{font-family:\0000360}}
+ul.open-task-list li {
+  padding: 5px;
+  border-bottom: 1px solid #eee;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/tothda\/src\/hiperk\/timer-extension\/app\/styles\/main\.scss}line{font-family:\0000364}}
+ul.open-task-list li .edit-task-handle {
+  display: none;
+  margin-left: 5px;
+  float: right;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/tothda\/src\/hiperk\/timer-extension\/app\/styles\/main\.scss}line{font-family:\0000371}}
+ul.open-task-list li:hover .edit-task-handle {
+  display: inline;
+  color: gray;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/tothda\/src\/hiperk\/timer-extension\/app\/styles\/main\.scss}line{font-family:\0000380}}
+#logs-page #log-navigator {
+  text-align: center;
+  margin: 15px 0;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/tothda\/src\/hiperk\/timer-extension\/app\/styles\/main\.scss}line{font-family:\0000383}}
+#logs-page #log-navigator .day {
+  padding: 0 70px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/tothda\/src\/hiperk\/timer-extension\/app\/styles\/main\.scss}line{font-family:\0000389}}
+#logs-page .logs-table .log-duration {
+  text-align: right;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/tothda\/src\/hiperk\/timer-extension\/app\/styles\/main\.scss}line{font-family:\0000393}}
+#logs-page .logs-table td.completed a {
+  text-decoration: line-through;
+  color: gray;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/tothda\/src\/hiperk\/timer-extension\/app\/styles\/main\.scss}line{font-family:\00003102}}
+#timer-page .timer, #timer-page .title {
+  text-align: center;
+}

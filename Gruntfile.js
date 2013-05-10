@@ -17,6 +17,7 @@ module.exports = function (grunt) {
 
     // configurable paths
     var yeomanConfig = {
+        tmp: 'app/tmp',
         app: 'app',
         dist: 'dist'
     };
@@ -92,7 +93,7 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: '<%= yeoman.app %>/scripts',
                     src: '{,*/}*.coffee',
-                    dest: '<%= yeoman.app %>/compiled_js',
+                    dest: '<%= yeoman.tmp %>/scripts',
                     ext: '.js'
                 }]
             },
@@ -109,7 +110,7 @@ module.exports = function (grunt) {
         compass: {
             options: {
                 sassDir: '<%= yeoman.app %>/styles',
-                cssDir: '<%= yeoman.app %>/compiled_css',
+                cssDir: '<%= yeoman.tmp %>/styles',
                 imagesDir: '<%= yeoman.app %>/images',
                 javascriptsDir: '<%= yeoman.app %>/scripts',
                 fontsDir: '<%= yeoman.app %>/styles/fonts',

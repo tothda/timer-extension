@@ -1,8 +1,10 @@
 <!doctype html>
 <html>
   <head>
+    <!-- build:css styles/main.css -->
     <link href="components/bootstrap/docs/assets/css/bootstrap.css" rel="stylesheet">
-    <link href="compiled_css/main.css" rel="stylesheet">
+    <link href="tmp/styles/main.css" rel="stylesheet">
+    <!-- endbuild -->
   </head>
   <body>
     <!-- CHROME EXTENSION POPUP -->
@@ -169,13 +171,13 @@
       </div>
     </script>
 
+    <!-- build:js scripts/popup.js -->
     <script src="components/jquery/jquery.js"></script>
     <script src="components/handlebars/handlebars.js"></script>
     <script src="components/ember/ember.js"></script>
     <script src="components/ember-data/index.js"></script>
     <script src="components/ember-localstorage/localstorage_adapter.js"></script>
     <script src="components/moment.js/moment.js"></script>
-    <!-- build:js scripts/popup.js -->
     <script src="compiled_js/popup.js"></script>
     <!-- endbuild -->
   </body>
